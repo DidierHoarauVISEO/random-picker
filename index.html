@@ -11,17 +11,39 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
     <style>
       #choices .selected {
-        color: red;
+        background-color: #b71c1c;
+        transition-duration: 2s;
+      }
+      body {
+        font-size: 3em;
+        padding: 1em;
+        background-color: #f4f4f4;
+      }
+      .action-delete {
+        position: absolute;
+        right: 1.4em;
+      }
+      .choice-container {
+        width: 100%;
+        padding: 0.4em;
+        border: 1px dashed #aaa;
+      }
+      .main-action {
+        font-size: 3em;
+        text-align: center;
+      }
+      #choiceNew-container {
+        padding-top: 2em;
       }
     </style>
   </head>
   <body onload="init()">
     <section id="choices"></section>
-    <span
-      >Add:&nbsp;&nbsp;<input id="choiceNew" />&nbsp;&nbsp;<i class="bi bi-plus-circle-fill" onclick="addChoice()"></i
-    ></span>
+    <p id="choiceNew-container">
+      Add:&nbsp;&nbsp;<input id="choiceNew" />&nbsp;&nbsp;<i class="bi bi-plus-circle-fill" onclick="addChoice()"></i>
+    </p>
     <hr />
-    <i class="bi bi-cpu-fill" onclick="chooseRandomly()"></i>
+    <p class="main-action"><i class="bi bi-cpu-fill" onclick="chooseRandomly()"></i></p>
   </body>
   <script>
     let choices = [];
@@ -46,8 +68,10 @@
         const newChoice = document.createElement("p");
         newChoice.id = "choice_" + i;
         const newChoiceDelete = document.createElement("i");
+        newChoice.classList.add("choice-container");
         newChoiceDelete.classList.add("bi-trash-fill");
         newChoiceDelete.classList.add("bi");
+        newChoiceDelete.classList.add("action-delete");
         newChoiceDelete.addEventListener("click", () => {
           deleteChoice(choice);
         });
