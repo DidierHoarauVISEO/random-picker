@@ -9,12 +9,19 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <style>
+      #choices .selected {
+        color: red;
+      }
+    </style>
   </head>
   <body onload="init()">
     <section id="choices"></section>
     <span
       >Add:&nbsp;&nbsp;<input id="choiceNew" />&nbsp;&nbsp;<i class="bi bi-plus-circle-fill" onclick="addChoice()"></i
     ></span>
+    <hr />
+    <i class="bi bi-cpu-fill" onclick="chooseRandomly()"></i>
   </body>
   <script>
     let choices = [];
@@ -34,9 +41,11 @@
     }
     function displayListChoices() {
       document.getElementById("choices").innerHTML = "";
-      choices.forEach((choice) => {
-        const newChoice = document.createElement("P"); // Create a <p> element
-        const newChoiceDelete = document.createElement("i"); // Create a <p> element
+      for (let i = 0; i < choices.length; i++) {
+        const choice = choices[i];
+        const newChoice = document.createElement("p");
+        newChoice.id = "choice_" + i;
+        const newChoiceDelete = document.createElement("i");
         newChoiceDelete.classList.add("bi-trash-fill");
         newChoiceDelete.classList.add("bi");
         newChoiceDelete.addEventListener("click", () => {
@@ -45,12 +54,25 @@
         newChoice.innerHTML = choice;
         newChoice.appendChild(newChoiceDelete);
         document.getElementById("choices").appendChild(newChoice);
-      });
+      }
       document.getElementById("choices");
     }
     function deleteChoice(choice) {
       choices.splice(choices.indexOf(choice), 1);
       displayListChoices();
+    }
+    function chooseRandomly() {
+      const pickedChoicePosition = Math.floor(Math.random() * 200 + 100) % choices.length;
+      for (let i = 0; i < choices.length; i++) {
+        const choice = choices[i];
+        if (i === pickedChoicePosition) {
+          document.getElementById("choice_" + i).classList.add("selected");
+          console.log(i, document.getElementById("choice_" + i));
+        } else {
+          document.getElementById("choice_" + i).classList.remove("selected");
+          console.log(i, document.getElementById("choice_" + i));
+        }
+      }
     }
   </script>
 </html>
