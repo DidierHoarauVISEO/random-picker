@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css"></style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+  </head>
+  <body onload="init()">
+    <section id="choices"></section>
+    <span
+      >Add:&nbsp;&nbsp;<input id="choiceNew" />&nbsp;&nbsp;<i class="bi bi-plus-circle-fill" onclick="addChoice()"></i
+    ></span>
+  </body>
+  <script>
+    let choices = [];
+    function init() {
+      if (localStorage.getItem("choices")) {
+        choices = JSON.parse(localStorage.getItem("choices"));
+      }
+      displayListChoices();
+    }
+    function addChoice() {
+      if (!document.getElementById("choiceNew").value) {
+        return;
+      }
+      choices.push(document.getElementById("choiceNew").value);
+      localStorage.setItem("choices", JSON.stringify(choices));
+      displayListChoices();
+    }
+    function displayListChoices() {
+      document.getElementById("choices").innerHTML = "";
+      choices.forEach((choice) => {
+        const newChoice = document.createElement("P"); // Create a <p> element
+        const newChoiceDelete = document.createElement("i"); // Create a <p> element
+        newChoiceDelete.classList.add("bi-trash-fill");
+        newChoiceDelete.classList.add("bi");
+        newChoiceDelete.addEventListener("click", () => {
+          deleteChoice(choice);
+        });
+        newChoice.innerHTML = choice;
+        newChoice.appendChild(newChoiceDelete);
+        document.getElementById("choices").appendChild(newChoice);
+      });
+      document.getElementById("choices");
+    }
+    function deleteChoice(choice) {
+      choices.splice(choices.indexOf(choice), 1);
+      displayListChoices();
+    }
+  </script>
+</html>
